@@ -35,7 +35,7 @@
     float redSliderEdge, greenSliderEdge, blueSliderEdge;
     CGPoint touchPoint;
     customShape * whatIamEditing;
-    //customShape * stopButton;
+    UISlider * slid;
 }
 
 -(void)setup
@@ -49,6 +49,19 @@
 -(void)setupButtons
 {
     NSString *colorPickToolTip = [[NSString alloc]initWithFormat:@"Swipe right on a button to change its color"];
+    
+    slid = [[UISlider alloc] initWithFrame:CGRectMake(self.canvas.width*0.92, self.canvas.height*0.3f, self.canvas.width*0.35f, 10)];
+    [slid setThumbImage: [UIImage imageNamed:@"redthumb.png"] forState:UIControlStateNormal];
+    [slid addTarget:self action:@selector(sliderValueChanged:)
+       forControlEvents:UIControlEventValueChanged];
+    
+    UIImage *minTrackImage = [[UIImage imageNamed:@"blackTrack.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
+    [slid setMinimumTrackImage:minTrackImage forState:UIControlStateNormal];
+    
+    UIImage *maxTrackImage = [[UIImage imageNamed:@"blackTrack.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
+    [slid setMaximumTrackImage:maxTrackImage forState:UIControlStateNormal];
+    
+    [self.canvas addSubview:slid];
     
     C4Font *outputFont = [C4Font fontWithName:@"OriyaSangamMN" size:20.0f];
     C4Label *colorPickerLabel = [C4Label labelWithText:colorPickToolTip font:outputFont frame:CGRectMake(0, 0, 250, 250)];
@@ -68,9 +81,9 @@
     greenSlider.center = CGPointMake(self.canvas.height-200, self.canvas.height*0.5f);
     blueSlider.center = CGPointMake(self.canvas.height-200, self.canvas.height*0.6f);
     
-    [self.canvas addImage:redSlider];
-    [self.canvas addImage:greenSlider];
-    [self.canvas addImage:blueSlider];
+    //[self.canvas addImage:redSlider];
+    //[self.canvas addImage:greenSlider];
+    //[self.canvas addImage:blueSlider];
     
     redSlider.userInteractionEnabled = greenSlider.userInteractionEnabled = blueSlider.userInteractionEnabled = NO;
     
@@ -378,5 +391,11 @@
         whatIamEditing.fillColor = [UIColor colorWithRed:redVal green:greenVal blue:blueVal alpha:1.0f];
     }
 }
+
+-(IBAction)sliderValueChanged:(UISlider *)sender
+{
+    NSLog(@"slider value = %f", sender.value);
+}
+
 
 @end
