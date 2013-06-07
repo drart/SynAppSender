@@ -22,6 +22,7 @@
         [self rect:frame];
         self.lineWidth = 0.0f;
         self.fillColor = fillColor;
+        self.strokeColor = C4GREY;
         self.origin = point;
         [self addGesture:TAP name:@"tap" action:@"tapped"];
         [self addGesture:SWIPERIGHT name:@"longpress" action:@"longPress"];
